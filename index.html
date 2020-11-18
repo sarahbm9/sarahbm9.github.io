@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en"><head>  
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <title>Computer Vision Course Project
+  | ECE, Virginia Tech | Fall 2020: ECE 4554/5554</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+<!-- Le styles -->  
+  <link href="css/bootstrap.css" rel="stylesheet">
+<style>
+body {
+padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+.vis {
+color: #3366CC;
+}
+.data {
+color: #FF9900;
+}
+</style>
+  
+<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements --><!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+
+<body>
+<div class="container">
+<div class="page-header">
+
+<!-- Title and Name --> 
+<h1>Rubix's Cube Recognition</h1> 
+<span style="font-size: 20px; line-height: 1.5em;"><strong>Tyler Parowski and Sarah Maxseiner</strong></span><br>
+<span style="font-size: 18px; line-height: 1.5em;">Fall 2020 ECE 4554/5554 Computer Vision: Course Project</span><br>
+<span style="font-size: 18px; line-height: 1.5em;">Virginia Tech</span>
+<hr>
+
+
+<!-- Goal -->
+<h3>Teaser Figure</h3>
+<br><br>
+<!-- Main Illustrative Figure --> 
+<div style="text-align: center;">
+<img style="height: 500px;" alt="" src="original1.jpg">
+</div>
+
+<br><br>
+<!-- Main Illustrative Figure --> 
+<div style="text-align: center;">
+<img style="height: 500px;" alt="" src="results1.jpg">
+</div>
+
+<!-- Goal -->
+<h3>Abstract</h3>
+
+We wish to be able to take a picture of a rubix cube and determine what colors reside on each of the spaces on a face. Our approach was to take a picture and find the rubix cube by using edge detection, Hough Transform, then to use an algorithm to determine the color of each square. This was achieved with additional small steps described fully in the Approach.
+
+<br><br>
+<!-- Introduction -->
+<h3>Introduction</h3>
+In this project, we are trying to identify the colors on the face of a single Rubik's Cube. While it might seem easy for humans, we wanted to implment it withe Computer Vision topics. We are mainly using edge detection to find the edges of the cube, we are also using Hough transform to be able to find lines in the Canny edge detector output. In addition, we will be doign some color identification given 3 different lighting conditions. This can be used to eventually be able to solve a rubik's cube given video or picture imput. 
+
+
+<br><br>
+<!-- Problem Statement -->
+<h3>Problem Statement</h3>
+In this project, we will be using computer vision techniques to be able to identify the colors in a single side  of a Rubik's Cube displayed in a picture. Our input will be a picture with one face of a Rubik's Cube showing. The output of our project will be a model outputted to the command line. This model will be able to define what colors are on the current side of the cube. Sample output is shown in the Approach section. For this project, we used openCV functions to find do edge detection, Hough Transforms, and contours. The process of determining the colors and finding the bounding box was created by the group members of this team.
+
+<br><br>
+<!-- Approach -->
+<h3>Approach</h3>
+There was several steps to be able to identify the colors on the side of a Rubik's Cube. The first step was to find the edges in the image. We used the Canny edge detector, sample results are show below. 
+
+Original Image:
+<br><br>
+<!-- Main Illustrative Figure --> 
+<div style="text-align: center;">
+<img style="height: 500px;" alt="" src="original.jpg">
+</div>
+
+Canny Edge Detector results:
+<br><br>
+<!-- Main Illustrative Figure --> 
+<div style="text-align: center;">
+<img style="height: 500px;" alt="" src="edges.jpg">
+</div>
+
+To reduce the noise from the carpet, we applied a Bilateral Filter to the image to blur the image before applying the Canny edge detector.
+Filtered Canny results:
+<br><br>
+<!-- Main Illustrative Figure --> 
+<div style="text-align: center;">
+<img style="height: 500px;" alt="" src="edges_filtered.jpg">
+</div>
+
+From the edges found from Canny, we created a contour. From the countour, the Hough Transform was used to find lines describing the outer edges of the cube. This was done by finding the horizontal and verticle lines. The Contours are in white, the Hough Transform lines are in gray. 
+<br><br>
+<!-- Main Illustrative Figure --> 
+<div style="text-align: center;">
+<img style="height: 500px;" alt="" src="lines.jpg">
+</div>
+After finding the max and min of the y intercepts and x intercepts of the Hough Transfom lines, a bounding box is created. To account for noise and other objects throwing off the bounding box, a squarify algorithm was written.
+<br><br>
+<!-- Main Illustrative Figure --> 
+<div style="text-align: center;">
+<img style="height: 500px;" alt="" src="square.jpg">
+</div>
+
+This is the image cropped to the box before squarifiy is called.
+<br><br>
+<!-- Main Illustrative Figure --> 
+<div style="text-align: center;">
+<img style="height: 500px;" alt="" src="croppedCurrent.jpg">
+</div>
+TYLER WRITE SOMETHING ABOUT SQUARIFY HERE
+This is the image cropped to the squarified bounding box
+<br><br>
+<!-- Main Illustrative Figure --> 
+<div style="text-align: center;">
+<img style="height: 500px;" alt="" src="croppedSquare.jpg">
+</div>
+TYLER WRITE SOMETHING ABOUT COLOR PICKING HERE
+Results are then outputted to the command line
+<br><br>
+<!-- Main Illustrative Figure --> 
+<div style="text-align: center;">
+<img style="height: 500px;" alt="" src="results.jpg">
+</div>
+
+
+
+<br><br>
+<!-- Results -->
+<h3>Experiments and results</h3>
+For our edge detection, we are using the Canny edge detector. One of the issues that we are currently running into is that the edge detection is working too well. In our images, there is either carpet or another object in the image with the cube. The canny edge detector is seeing the carpet/other object and its making it hard to find the lines of the rubik's cube. Some cleaner pictures will help in addition to computing better parameters for the Canny edge detector. Some sample images are shown in Qualitative results. If this is still an issue with cleaner pictures and better edge detection parameters, a machine learning algorithm might be needed. The actual edge detection of the cube works well for the bright colors; there is less pronounced edges with dark colors. There is less edge detection with darker colors. Not sure if this will be an issue yet. If we use both the color/hue of the image and the edge detection, we should be able to work around this issue. These issues makes sense given the input of an image given the methods used. On the color detection side of the code, the function takes in a RGB value and returns what color it believes it is based on finding the closest color based on an array of over 100 samples gotten from our test photos taken in a variety of different lightings and with different shades taken from various places on the cube to ensure as much accuracy as possible. Given that the plan is to have the color be taken from the center of each square, it was important to have black values be taken for the white cube due to teh logo found on the center white square. The greatest concern is that orange and red have very similar colors in low light environments but based on the testing that has been done, I could not trick the function to give an incorrect output.
+
+FINAL REPORT STUFF STARTS HERE
+The figures below show a sample output. This sucessful case shows the input and output of the application. As you can see, the application was fully correct when identifying colors.
+<br><br>
+<!-- Main Illustrative Figure --> 
+<div style="text-align: center;">
+<img style="height: 500px;" alt="" src="original1.jpg">
+</div>
+
+<br><br>
+<!-- Main Illustrative Figure --> 
+<div style="text-align: center;">
+<img style="height: 500px;" alt="" src="results1.jpg">
+</div>
+However, the application had a hard time identifying the colors and the edge of the cube in this example (this is the darkest setting that we had)
+<br><br>
+<!-- Main Illustrative Figure --> 
+<div style="text-align: center;">
+<img style="height: 500px;" alt="" src="squareBAD.jpg">
+</div>
+
+<br><br>
+<!-- Main Illustrative Figure --> 
+<div style="text-align: center;">
+<img style="height: 500px;" alt="" src="resultsBAD.jpg">
+</div>
+<h3>Conclusion and future work</h3>
+This report has described that the color detection function seems to be working to what we desire, however more work must be done to make the edge detection more reliable. On top of this we still need to impliment the function that locates the face of the cube and then impliments the color detection function. While there is still a good bit of work to do, we are happy with the progress we have made so far.
+These are a few outputs of the Canny edge detector. 
+FINAL REPORT INFO STARTS HERE
+For future work, I would like to look into finding correlated parallel edges. Some issues arose from being able to identify perfectly up/down or left/right lines from the Hough Transform. When the image was not directly in frame, the algorithm had a hard time identifying the tilted edges as edges of the cube.
+
+
+<h3>References</h3>
+Link to Rubik's Cube Visualization Code: https://github.com/x4Cx58x54/rubik-image
+
+<br><br>
+
+  <hr>
+  <footer> 
+  <p>© Sarah Maxseiner and Tyler Parowski</p>
+  </footer>
+</div>
+</div>
+
+<br><br>
+
+</body></html>
