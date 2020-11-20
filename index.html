@@ -69,7 +69,7 @@ In this project, we are trying to identify the colors on the face of a single Ru
 <br><br>
 <!-- Problem Statement -->
 <h3>Problem Statement</h3>
-In this project, we will be using computer vision techniques to be able to identify the colors in a single side  of a Rubik's Cube displayed in a picture. Our input will be a picture with one face of a Rubik's Cube showing. The output of our project will be a model outputted to the command line. This model will be able to define what colors are on the current side of the cube. Sample output is shown in the Approach section. For this project, we used openCV functions to find do edge detection, Hough Transforms, and contours. The process of determining the colors and finding the bounding box was created by the group members of this team.
+In this project, we will be using computer vision techniques to be able to identify the colors in a single side  of a Rubik's Cube displayed in a picture. Our input will be a picture with one face of a Rubik's Cube showing. The output of our project will be a model outputted to the command line. This model will be able to define what colors are on the current side of the cube. Sample output is shown in the Approach section. For this project, we used openCV functions to do edge detection, Hough Transforms, and contours. The process of determining the colors and finding the bounding box was created by the group members of this team.
 
 <br><br>
 <!-- Approach -->
@@ -117,7 +117,7 @@ This is the image cropped to the box before squarifiy is called.
 <div style="text-align: center;">
 <img style="height: 500px;" alt="" src="croppedCurrent.jpg">
 </div>
-The image is then put into the squarify function where the function detects what it believes to be the corner of the rubix cube closest to the edge of the photo, and then reduces the longer side of the image to become a square./n
+The image is then put into the squarify function where the function detects what it believes to be the corner of the rubix cube closest to the edge of the photo, and then reduces the longer side of the image to become a square. <br>
 This is the image cropped to the squarified bounding box
 <br><br>
 <!-- Main Illustrative Figure --> 
@@ -136,8 +136,8 @@ The image is then seperated into 9 sections where every pixel is looked at one a
 <br><br>
 <!-- Results -->
 <h3>Experiments and results</h3>
-For our edge detection, we are using the Canny edge detector. One of the issues that we are currently running into is that the edge detection is working too well. In our images, there is either carpet or another object in the image with the cube. The canny edge detector is seeing the carpet/other object and its making it hard to find the lines of the rubik's cube. Some cleaner pictures will help in addition to computing better parameters for the Canny edge detector. Some sample images are shown in Qualitative results. If this is still an issue with cleaner pictures and better edge detection parameters, a machine learning algorithm might be needed. The actual edge detection of the cube works well for the bright colors; there is less pronounced edges with dark colors. There is less edge detection with darker colors. This has proved to be a source of error on a few tests. If we use both the color/hue of the image and the edge detection, we should be able to work around this issue. These issues makes sense given the input of an image given the methods used. On the color detection side of the code, the function takes in a RGB value and returns what color it believes it is based on finding the closest color based on an array of over 100 samples gotten from our test photos taken in a variety of different lightings and with different shades taken from various places on the cube to ensure as much accuracy as possible. It was important to have black values be taken for the white cube due to the logo found on the center white square. The greatest concern is that orange and red have very similar colors in low light environments but based on the testing that has been done, and in one test the algorithm found a red tile to be orange.
 When it came to testing our full data set with out fully implimented code, We found that of the 48 images we tested against, 34 were perfect identifications of the faces, two results only identified 8 of the 9 faces correct, and one sample only had 6 of the 9 faces correct. This led to a success rate of 75.9% with our data set. It is worth noting that a few examples in our "data" folder were not used. This is due to the image having multiple faces of the cube shown at once, which our code was not created to be able to handle. 
+<h3>Qualitative Results</h3>
 The figures below show a sample output. This sucessful case shows the input and output of the application. As you can see, the application was fully correct when identifying colors.
 <br><br>
 <!-- Main Illustrative Figure --> 
