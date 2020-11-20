@@ -63,7 +63,7 @@ We wish to be able to take a picture of a rubix cube and determine what colors r
 <br><br>
 <!-- Introduction -->
 <h3>Introduction</h3>
-In this project, we are trying to identify the colors on the face of a single Rubik's Cube. While it might seem easy for humans, we wanted to implment it withe Computer Vision topics. We are mainly using edge detection to find the edges of the cube, we are also using Hough transform to be able to find lines in the Canny edge detector output. In addition, we will be doign some color identification given 3 different lighting conditions. This can be used to eventually be able to solve a rubik's cube given video or picture imput. 
+In this project, we are trying to identify the colors on the face of a single Rubik's Cube. While it might seem easy for humans, we wanted to implment it withe Computer Vision topics. We are mainly using edge detection to find the edges of the cube, we are also using Hough transform to be able to find lines in the Canny edge detector output. In addition, we will be doing some color identification given 3 different lighting conditions. This can be used to eventually be able to solve a rubik's cube given video or picture imput. 
 
 
 <br><br>
@@ -117,15 +117,14 @@ This is the image cropped to the box before squarifiy is called.
 <div style="text-align: center;">
 <img style="height: 500px;" alt="" src="croppedCurrent.jpg">
 </div>
-TYLER WRITE SOMETHING ABOUT SQUARIFY HERE
+The image is then put into the squarify function where the function detects what it believes to be the corner of the rubix cube closest to the edge of the photo, and then reduces the longer side of the image to become a square./n
 This is the image cropped to the squarified bounding box
 <br><br>
 <!-- Main Illustrative Figure --> 
 <div style="text-align: center;">
 <img style="height: 500px;" alt="" src="croppedSquare.jpg">
 </div>
-TYLER WRITE SOMETHING ABOUT COLOR PICKING HERE
-Results are then outputted to the command line
+The image is then seperated into 9 sections where every pixel is looked at one after the other and compared to a self-gathered dataset to determine what color we believe that pixel is. The most commonly appearing color is then selected to be that section of the cube. Results are then outputted to the command line using a function that simply takes the results from the last function.
 <br><br>
 <!-- Main Illustrative Figure --> 
 <div style="text-align: center;">
@@ -137,9 +136,8 @@ Results are then outputted to the command line
 <br><br>
 <!-- Results -->
 <h3>Experiments and results</h3>
-For our edge detection, we are using the Canny edge detector. One of the issues that we are currently running into is that the edge detection is working too well. In our images, there is either carpet or another object in the image with the cube. The canny edge detector is seeing the carpet/other object and its making it hard to find the lines of the rubik's cube. Some cleaner pictures will help in addition to computing better parameters for the Canny edge detector. Some sample images are shown in Qualitative results. If this is still an issue with cleaner pictures and better edge detection parameters, a machine learning algorithm might be needed. The actual edge detection of the cube works well for the bright colors; there is less pronounced edges with dark colors. There is less edge detection with darker colors. Not sure if this will be an issue yet. If we use both the color/hue of the image and the edge detection, we should be able to work around this issue. These issues makes sense given the input of an image given the methods used. On the color detection side of the code, the function takes in a RGB value and returns what color it believes it is based on finding the closest color based on an array of over 100 samples gotten from our test photos taken in a variety of different lightings and with different shades taken from various places on the cube to ensure as much accuracy as possible. Given that the plan is to have the color be taken from the center of each square, it was important to have black values be taken for the white cube due to teh logo found on the center white square. The greatest concern is that orange and red have very similar colors in low light environments but based on the testing that has been done, I could not trick the function to give an incorrect output.
-
-FINAL REPORT STUFF STARTS HERE
+For our edge detection, we are using the Canny edge detector. One of the issues that we are currently running into is that the edge detection is working too well. In our images, there is either carpet or another object in the image with the cube. The canny edge detector is seeing the carpet/other object and its making it hard to find the lines of the rubik's cube. Some cleaner pictures will help in addition to computing better parameters for the Canny edge detector. Some sample images are shown in Qualitative results. If this is still an issue with cleaner pictures and better edge detection parameters, a machine learning algorithm might be needed. The actual edge detection of the cube works well for the bright colors; there is less pronounced edges with dark colors. There is less edge detection with darker colors. This has proved to be a source of error on a few tests. If we use both the color/hue of the image and the edge detection, we should be able to work around this issue. These issues makes sense given the input of an image given the methods used. On the color detection side of the code, the function takes in a RGB value and returns what color it believes it is based on finding the closest color based on an array of over 100 samples gotten from our test photos taken in a variety of different lightings and with different shades taken from various places on the cube to ensure as much accuracy as possible. It was important to have black values be taken for the white cube due to the logo found on the center white square. The greatest concern is that orange and red have very similar colors in low light environments but based on the testing that has been done, and in one test the algorithm found a red tile to be orange.
+When it came to testing our full data set with out fully implimented code, We found that of the 48 images we tested against, 34 were perfect identifications of the faces, two results only identified 8 of the 9 faces correct, and one sample only had 6 of the 9 faces correct. This led to a success rate of 75.9% with our data set. It is worth noting that a few examples in our "data" folder were not used. This is due to the image having multiple faces of the cube shown at once, which our code was not created to be able to handle. 
 The figures below show a sample output. This sucessful case shows the input and output of the application. As you can see, the application was fully correct when identifying colors.
 <br><br>
 <!-- Main Illustrative Figure --> 
@@ -165,14 +163,12 @@ However, the application had a hard time identifying the colors and the edge of 
 <img style="height: 500px;" alt="" src="resultsBAD.jpg">
 </div>
 <h3>Conclusion and future work</h3>
-This report has described that the color detection function seems to be working to what we desire, however more work must be done to make the edge detection more reliable. On top of this we still need to impliment the function that locates the face of the cube and then impliments the color detection function. While there is still a good bit of work to do, we are happy with the progress we have made so far.
-These are a few outputs of the Canny edge detector. 
-FINAL REPORT INFO STARTS HERE
-For future work, I would like to look into finding correlated parallel edges. Some issues arose from being able to identify perfectly up/down or left/right lines from the Hough Transform. When the image was not directly in frame, the algorithm had a hard time identifying the tilted edges as edges of the cube.
+This report has described how our code takes an image of a rubix cube and using edge detection and color identification can, with a 75.9% accuracy rate, identify the colors of each of the faces shown in the image. However, this code is limited to pictures that only show one face of the cube. This report also has described how our code can struggle to detect the cube itself and how dark lighting in the photo has a large factor in the error rate of the code as well as other noise in the picture playing a role.
+For future work, we would like to look into finding correlated parallel edges. Some issues arose from being able to identify perfectly up/down or left/right lines from the Hough Transform. When the image was not directly in frame, the algorithm had a hard time identifying the tilted edges as edges of the cube. On top of this, future expansions to this project could include features such as being able to identify multiple faces at once in the same picture, an option to construct a full cube from pictures, and taking that full cube and providing a list of moves to solve it.
 
 
 <h3>References</h3>
-Link to Rubik's Cube Visualization Code: https://github.com/x4Cx58x54/rubik-image
+Link to Rubik's Cube Visualization Code: https://github.com/x4Cx58x54/rubik-image (Unused Due to Time Constrants)
 
 <br><br>
 
